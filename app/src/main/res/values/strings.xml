@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">mobieapp</string>
+    <string name="app_intro">im smart </string>
+    <string name="username">Enter Username </string>
+    <string name="password">Enter Password </string>
+    <string name="email">Enter Email </string>
+    <string name="Registor">Registor </string>
+    <string name="name">Enter Name </string>
+    <string name="back">Go back </string>
+    <string name="me">Taddesse, Abenezer 4/12/2021 </string>
+</resources>
