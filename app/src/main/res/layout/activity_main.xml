@@ -10,6 +10,14 @@
     tools:context=".MainActivity">
 
     <EditText
+        android:id="@+id/editUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/username"
+        android:inputType="textPersonName" />
+
+    <EditText
         android:id="@+id/editTextName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,13 +33,28 @@
         android:hint="@string/email"
         android:inputType="textEmailAddress"/>
 
-    <EditText
-        android:id="@+id/editUser"
-        android:layout_width="match_parent"
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/username"
-        android:inputType="textPersonName" />
+        android:orientation="horizontal" >
+        <Button
+            android:id="@+id/datePickerButton"
+            android:textSize="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button one" />
+
+        <EditText
+            android:id="@+id/datetText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="BirthDate"
+             />
+
+    </LinearLayout>
 
     <EditText
         android:id="@+id/password"
@@ -47,5 +70,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="100dp"
         android:text="@string/Registor" />
+
+
 
 </LinearLayout>
