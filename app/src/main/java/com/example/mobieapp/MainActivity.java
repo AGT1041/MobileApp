@@ -52,6 +52,8 @@ public class MainActivity extends AppCompatActivity implements OnDateSetListener
                     Intent intent = new Intent(MainActivity.this, SecondActivity.class);
                     intent.putExtra("usernames", username);
                     intent.putExtra("age", ageText);
+                    intent.putExtra("fullname",fullName.getText().toString());
+                    intent.putExtra("fullname",fullName.getText().toString());
                     //intent.putExtra("age",)
                     startActivity(intent);
                 }
@@ -94,12 +96,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSetListener
         }
 
 
-        //} else if (Password.length() < 8) {
-         //   Password.setError("Password must be minimum 8 characters");
-         //   return false;
-       // }
-
-        // after all validation return true.
+        // return true.
         return true;
 
     }
@@ -153,7 +150,6 @@ public class MainActivity extends AppCompatActivity implements OnDateSetListener
         if(today.get(Calendar.DAY_OF_MONTH) < dob.get(Calendar.DAY_OF_MONTH)){
             age--;
         }
-
 
             return age;
 
