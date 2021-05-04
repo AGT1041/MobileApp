@@ -1,8 +1,5 @@
 package com.example.mobieapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
@@ -11,19 +8,18 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
+
+import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.Period;
-import java.time.Year;
 import java.util.Calendar;
 
-import static java.util.Calendar.DATE;
-import static java.util.Calendar.DAY_OF_MONTH;
-import static java.util.Calendar.MONTH;
-import static java.util.Calendar.YEAR;
+import static android.app.DatePickerDialog.OnDateSetListener;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnDateSetListener{
     private EditText userText;
     private EditText passWord;
     private EditText fullName;
@@ -33,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView mDateText;
     boolean isNameValid, isEmailValid;
     boolean isAllFieldsChecked = true;
+    int ageText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
                     String username = userText.getText().toString();
                     Intent intent = new Intent(MainActivity.this, SecondActivity.class);
                     intent.putExtra("usernames", username);
+                    intent.putExtra("age", ageText);
+                    //intent.putExtra("age",)
                     startActivity(intent);
                 }
             }
@@ -61,17 +60,23 @@ public class MainActivity extends AppCompatActivity {
         mDatebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openDatePicker();
+                DialogFragment datePicker = new DatePickerFragment();
+                datePicker.show(getSupportFragmentManager(), "date picker");
+
             }
         });
     }
+
+
+
     public boolean SetValidation() {
         if (userText.length() <6) {
-            userText.setError("Must have 6 charcters");
+            userText.setError("Must have 6 characters");
             return false;
         }
+
         if(fullName.length()<8){
-            fullName.setError("Must have 8 charcters");
+            fullName.setError("Must have 8 characters");
             return false;
 
         }
@@ -79,12 +84,12 @@ public class MainActivity extends AppCompatActivity {
 //String user=userText.getText().toString();
         if (emailinput.length()==0 && !Patterns.EMAIL_ADDRESS.matcher(emailinput).matches()) {
             //Toast.makeText(this, "Email is Valiade", Toast.LENGTH_SHORT).show();
-            emailText.setError("Email is inValiade");
+            emailText.setError("Email is inValid");
             return false;
         }
 
          if (passWord.length() <7) {
-            passWord.setError("Pawword must have 8 or more charcters");
+            passWord.setError("Password must have 8 or more characters");
             return false;
         }
 
@@ -98,33 +103,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
 
     }
-    private void openDatePicker (){
-        Calendar  calendar = Calendar.getInstance();
-        int YEAR = calendar.get(Calendar.YEAR);
-        int MONTH = calendar.get(Calendar.MONTH);
-        int DATE = calendar.get(Calendar.DATE);
 
-         
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                month=month+1;
-                mDateText.setText(dayOfMonth+"/"+month+"/"+year);
-               // LocalDate today = LocalDate.now();
-               // LocalDate birthday = LocalDate.of(YEAR, MONTH, DATE);
-               // Period period = Period.between(birthday, today);
-
-
-
-                //if(p.getYears()<2 ){
-                //    mDateText.setError("Must be 18 Years or Older");
-                //    return;
-                //}
-
-            }
-        }, YEAR,MONTH,DATE);
-        datePickerDialog.show();
-    }
 
 
     @Override
@@ -134,5 +113,50 @@ public class MainActivity extends AppCompatActivity {
         startActivity(getIntent());
     }
 
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.YEAR, year);
+        c.set(Calendar.MONTH, month);
+        c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+        String currentDateString = DateFormat.getDateInstance(DateFormat.SHORT).format(c.getTime());
+        //TextView textView = (TextView) findViewById(R.id.datetText);
+        mDateText.setText(currentDateString);
+        boolean goodage =true;
+
+        LocalDate bdays = LocalDate.of(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH);
+        LocalDate todays = LocalDate.now();
+        int age = Period.between(todays, bdays).getYears();
+
+        ageText=(calculateAge(c.getTimeInMillis()));
+        if (ageText<18){
+            mDateText.setError("you need to be 18");
+
+        }
+        else{
+            mDateText.setError(null);
+
+        }
+
+        Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+
+        //intent.putExtra("age",)
+
+
+    }
+    int calculateAge(long date){
+        Calendar dob = Calendar.getInstance();
+        dob.setTimeInMillis(date);
+        Calendar today = Calendar.getInstance();
+        int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
+        if(today.get(Calendar.DAY_OF_MONTH) < dob.get(Calendar.DAY_OF_MONTH)){
+            age--;
+        }
+
+
+            return age;
+
+    }
 
 }

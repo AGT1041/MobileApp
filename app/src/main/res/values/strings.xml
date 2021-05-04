@@ -7,5 +7,6 @@
     <string name="Registor">Registor </string>
     <string name="name">Enter Name </string>
     <string name="back">Go back </string>
+    <string name="datePick">Pick a Date </string>
     <string name="me">Taddesse, Abenezer 4/12/2021 </string>
 </resources>
