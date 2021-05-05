@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSetListener
         }
         String emailinput = emailText.getText().toString();
 //String user=userText.getText().toString();
-        if (emailinput.length()==0 && !Patterns.EMAIL_ADDRESS.matcher(emailinput).matches()) {
+        if (emailinput.length()==0 || !Patterns.EMAIL_ADDRESS.matcher(emailinput).matches()) {
             //Toast.makeText(this, "Email is Valiade", Toast.LENGTH_SHORT).show();
             emailText.setError("Email is inValid");
             return false;
