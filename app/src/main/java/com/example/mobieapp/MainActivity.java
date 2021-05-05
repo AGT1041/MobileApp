@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSetListener
     private EditText fullName;
     private EditText emailText;
     Button signUp;
-    private Button mDatebtn;
+    private Button mDatebtn,dButton;
     private TextView mDateText;
     boolean isNameValid, isEmailValid;
     boolean isAllFieldsChecked = true;
@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSetListener
         fullName=findViewById(R.id.editTextName);
         passWord=findViewById(R.id.password);
         signUp=findViewById(R.id.regester);
+       // dButton=findViewById(R.id.regester);
         mDatebtn=findViewById(R.id.datePickerButton);
         mDateText=findViewById(R.id.datetText);
 
@@ -47,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSetListener
             public void onClick(View v) {
                 //isAllFieldsChecked=SetValidation();
 
-                if(SetValidation()==true){
+                if(SetValidation()==true && mDateText.length()!=0){
                     String username = userText.getText().toString();
                     Intent intent = new Intent(MainActivity.this, SecondActivity.class);
                     intent.putExtra("usernames", username);
@@ -95,6 +96,9 @@ public class MainActivity extends AppCompatActivity implements OnDateSetListener
             return false;
         }
 
+        if (mDateText.length()==0){
+            mDateText.setError("need birth date");
+        }
 
         // return true.
         return true;
@@ -122,12 +126,12 @@ public class MainActivity extends AppCompatActivity implements OnDateSetListener
         mDateText.setText(currentDateString);
         boolean goodage =true;
 
-        LocalDate bdays = LocalDate.of(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH);
-        LocalDate todays = LocalDate.now();
-        int age = Period.between(todays, bdays).getYears();
+        LocalDate userday = LocalDate.of(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH);
+        LocalDate todaydate = LocalDate.now();
+        int age = Period.between(todaydate, userday).getYears();
 
         ageText=(calculateAge(c.getTimeInMillis()));
-        if (ageText<18){
+        if (ageText<18|| mDateText.getText().toString().length()==0){
             mDateText.setError("you need to be 18");
 
         }

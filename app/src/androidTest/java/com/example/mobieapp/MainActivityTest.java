@@ -44,6 +44,18 @@ public class MainActivityTest {
         onView(withId(R.id.regester)).perform( (click()));
         onView(allOf(withId(R.id.editTextEmail), hasErrorText("Email is inValid")));
     }
+    @Test
+    public void voidbirthdate(){
+        onView(withId(R.id.editUser)).perform(typeText("abetest"));
+        onView(withId(R.id.editTextName)).perform(typeText("abenezer taddesse"));
+        onView(withId(R.id.editTextEmail)).perform(typeText("abe@gmail.com"));
+
+        onView(withId(R.id.password)).perform(typeText("password12"));
+        onView(withId(R.id.datetText)).perform(typeText(""));
+        onView(withId(R.id.regester)).perform( (click()));
+        onView(allOf(withId(R.id.datetText), hasErrorText("need birth date")));
+    }
+
     public void passwordcheck(){
         onView(withId(R.id.password)).perform(typeText("pass"));
         onView(withId(R.id.regester)).perform((click()));
